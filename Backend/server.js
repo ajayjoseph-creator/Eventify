@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin:"https://eventify-one-umber.vercel.app/",
+  origin:"https://eventify-one-umber.vercel.app",
   credentials: true
 }));
 
