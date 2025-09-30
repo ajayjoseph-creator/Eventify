@@ -11,7 +11,7 @@ const CreateEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.post("/events", { title, dateTime, location, description });
+      await API.post("/api/events", { title, dateTime, location, description });
       toast.success("Event created successfully!");
       setTitle("");
       setDateTime("");

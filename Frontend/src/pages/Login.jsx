@@ -12,7 +12,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post("/auth/login", { email, password });
+      const res = await API.post("/api/auth/login", { email, password });
       login(res.data);
       toast.success("Logged in successfully!");
     } catch (error) {

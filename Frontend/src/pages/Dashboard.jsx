@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await API.get("/events");
+      const res = await API.get("/api/events");
       const allEvents = res.data;
 
       const now = new Date();
@@ -39,7 +39,7 @@ const Dashboard = () => {
   };
 
   const handleCopyLink = (publicLink) => {
-    const url = `${window.location.origin}/events/public/${publicLink}`;
+    const url = `${window.location.origin}/api/events/public/${publicLink}`;
     navigator.clipboard.writeText(url);
     toast.success("Share link copied!");
   };
