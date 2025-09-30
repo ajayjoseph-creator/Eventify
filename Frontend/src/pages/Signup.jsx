@@ -3,6 +3,7 @@ import API from "../utils/api.js";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { motion } from "framer-motion";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -24,16 +25,23 @@ const Signup = () => {
     try {
       await API.post("/api/auth/register", { name, email, password });
       toast.success("Account created successfully!");
-      navigate("/login"); 
+      navigate("/login");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Signup failed");
+      toast.error(
+        error?.response?.data?.message || error.message || "Signup failed"
+      );
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="flex flex-col md:flex-row w-full max-w-4xl shadow-lg rounded-lg overflow-hidden">
-       
+      <motion.div
+        className="flex flex-col md:flex-row w-full max-w-4xl shadow-lg rounded-lg overflow-hidden"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {/* Left Side - Form */}
         <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-6">
           <div className="w-full max-w-md">
             <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">
@@ -45,7 +53,7 @@ const Signup = () => {
                 placeholder="Full Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900 transition"
                 required
               />
               <input
@@ -53,7 +61,7 @@ const Signup = () => {
                 placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900 transition"
                 required
               />
               <div className="relative">
@@ -62,11 +70,11 @@ const Signup = () => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900 transition"
                   required
                 />
                 <span
-                  className="absolute right-3 top-3 cursor-pointer text-gray-600"
+                  className="absolute right-3 top-3 cursor-pointer text-gray-600 transition-transform hover:scale-110"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <FiEyeOff /> : <FiEye />}
@@ -78,11 +86,11 @@ const Signup = () => {
                   placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900 transition"
                   required
                 />
                 <span
-                  className="absolute right-3 top-3 cursor-pointer text-gray-600"
+                  className="absolute right-3 top-3 cursor-pointer text-gray-600 transition-transform hover:scale-110"
                   onClick={() =>
                     setShowConfirmPassword(!showConfirmPassword)
                   }
@@ -92,7 +100,7 @@ const Signup = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-green-900 text-white p-3 rounded-lg font-semibold hover:bg-green-700 transition"
+                className="w-full bg-green-900 text-white p-3 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-300"
               >
                 Sign Up
               </button>
@@ -109,17 +117,27 @@ const Signup = () => {
           </div>
         </div>
 
-        
+        {/* Right Side - Info */}
         <div className="w-full md:w-1/2 bg-green-900 text-white flex flex-col justify-center items-start p-6">
-          <h3 className="text-2xl font-semibold mb-4">
+          <motion.h3
+            className="text-2xl font-semibold mb-4"
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
             Track Your Events Effortlessly
-          </h3>
-          <p className="mb-6">
+          </motion.h3>
+          <motion.p
+            className="mb-6"
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             Plan, organize, and monitor your events with ease. Get real-time
             updates and stay on top of all your schedules.
-          </p>
+          </motion.p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
