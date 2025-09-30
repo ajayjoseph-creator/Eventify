@@ -9,19 +9,12 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
 
     try {
       await API.post("/api/auth/register", {
@@ -85,29 +78,11 @@ const Signup = () => {
                   {showPassword ? <FiEyeOff /> : <FiEye />}
                 </span>
               </div>
-              <div className="relative">
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900 transition"
-                  required
-                />
-                <span
-                  className="absolute right-3 top-3 cursor-pointer text-gray-600 transition-transform hover:scale-110"
-                  onClick={() =>
-                    setShowConfirmPassword(!showConfirmPassword)
-                  }
-                >
-                  {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
-                </span>
-              </div>
               <button
                 type="submit"
-                disabled={!password || !confirmPassword}
+                disabled={!password}
                 className={`w-full p-3 rounded-lg font-semibold transition-colors duration-300 ${
-                  !password || !confirmPassword
+                  !password
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-green-900 text-white hover:bg-green-700"
                 }`}
