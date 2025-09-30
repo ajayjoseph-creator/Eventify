@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css"; 
 import Navbar from "./components/Navbar.jsx";
@@ -13,6 +13,17 @@ import WelcomeAnimation from "./components/WelcomeAnimation.jsx";
 
 function App() {
   const [showWelcome, setShowWelcome] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // After welcome animation ends, check if user is logged in
+    if (!showWelcome) {
+      const token = localStorage.getItem("token"); // assuming you store JWT token
+      if (!token) {
+        navigate("/login"); // redirect to login if not authenticated
+      }
+    }
+  }, [showWelcome, navigate]);
 
   if (showWelcome) {
     return <WelcomeAnimation onComplete={() => setShowWelcome(false)} />;
