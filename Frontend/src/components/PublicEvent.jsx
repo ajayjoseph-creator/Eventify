@@ -10,7 +10,7 @@ const PublicEvent = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await API.get(`/api/events/public/${publicLink}`);
+        const res = await API.get(`/events/public/${publicLink}`);
         setEvent(res.data);
       } catch (err) {
         toast.error("Event not found");
