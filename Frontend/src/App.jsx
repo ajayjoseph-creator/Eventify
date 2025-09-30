@@ -14,37 +14,23 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
-
+      <Route
+    path="/"
+    element={
+      <div className="flex items-center justify-center min-h-screen bg-green-100">
+        <h1 className="text-4xl font-bold text-green-900">Welcome to Eventify</h1>
+      </div>
+    }
+  />
       <Routes>
-        <Route 
-          path="/" 
-          element={
-            <div className="flex items-center justify-center min-h-screen bg-green-100">
-              <h1 className="text-4xl font-bold text-green-900">Welcome to Eventify</h1>
-            </div>
-          } 
-        />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route 
-          path="/dashboard" 
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
-          path="/create-event" 
-          element={
-            <ProtectedRoute>
-              <CreateEvent />
-            </ProtectedRoute>
-          } 
-        />
+        <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute> }  />
+        <Route path="/create-event" element={ <ProtectedRoute> <CreateEvent /> </ProtectedRoute>      } />
         <Route path="/events/public/:publicLink" element={<PublicEvent />} />
       </Routes>
 
+      {/* Toast container goes here */}
       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
