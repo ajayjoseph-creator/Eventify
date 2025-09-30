@@ -1,22 +1,17 @@
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
 
-
-
-
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password, confirmPassword } = req.body;
 
- 
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: "Passwords do not match" });
+    }
+
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({ message: "User already exists" });
-    }
-
-    
-    if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Passwords do not match" });
     }
 
     const user = new User({ name, email, password });
@@ -34,15 +29,11 @@ export const registerUser = async (req, res) => {
   }
 };
 
-
-
-
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-
     if (user && (await user.matchPassword(password))) {
       res.json({
         _id: user._id,

@@ -16,27 +16,27 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
 
-  try {
-    await API.post("/api/auth/register", {
-      name: name.trim(),
-      email: email.trim(),
-      password: password.trim(),
-      confirmPassword: confirmPassword.trim(), 
-    });
-    toast.success("Account created successfully!");
-    navigate("/login");
-  } catch (error) {
-    toast.error(
-      error?.response?.data?.message || error.message || "Signup failed"
-    );
-  }
-};
-
-  const isPasswordMatch = password.trim() === confirmPassword.trim();
+    try {
+      await API.post("/api/auth/register", {
+        name: name.trim(),
+        email: email.trim(),
+        password: password.trim(),
+      });
+      toast.success("Account created successfully!");
+      navigate("/login");
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message || error.message || "Signup failed"
+      );
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -75,11 +75,7 @@ const Signup = () => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 transition ${
-                    !isPasswordMatch && confirmPassword
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-green-900"
-                  }`}
+                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900 transition"
                   required
                 />
                 <span
@@ -95,11 +91,7 @@ const Signup = () => {
                   placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 transition ${
-                    !isPasswordMatch && confirmPassword
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-green-900"
-                  }`}
+                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-900 transition"
                   required
                 />
                 <span
@@ -111,14 +103,11 @@ const Signup = () => {
                   {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
                 </span>
               </div>
-              {!isPasswordMatch && confirmPassword && (
-                <p className="text-red-500 text-sm">Passwords do not match</p>
-              )}
               <button
                 type="submit"
-                disabled={!isPasswordMatch || !password || !confirmPassword}
+                disabled={!password || !confirmPassword}
                 className={`w-full p-3 rounded-lg font-semibold transition-colors duration-300 ${
-                  !isPasswordMatch || !password || !confirmPassword
+                  !password || !confirmPassword
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-green-900 text-white hover:bg-green-700"
                 }`}
