@@ -18,7 +18,7 @@ const Login = () => {
       const res = await API.post("/api/auth/login", { email, password });
       login(res.data);
       toast.success("Logged in successfully!");
-      navigate("/dashboard"); // redirect after login
+      navigate("/dashboard"); 
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
     }
