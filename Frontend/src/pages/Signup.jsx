@@ -16,27 +16,28 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (password.trim() !== confirmPassword.trim()) {
-      toast.error("Passwords do not match");
-      return;
-    }
+  if (password.trim() !== confirmPassword.trim()) {
+    toast.error("Passwords do not match");
+    return;
+  }
 
-    try {
-      await API.post("/api/auth/register", {
-        name: name.trim(),
-        email: email.trim(),
-        password: password.trim(),
-      });
-      toast.success("Account created successfully!");
-      navigate("/login");
-    } catch (error) {
-      toast.error(
-        error?.response?.data?.message || error.message || "Signup failed"
-      );
-    }
-  };
+  try {
+    await API.post("/api/auth/register", {
+      name: name.trim(),
+      email: email.trim(),
+      password: password.trim(),
+      confirmPassword: confirmPassword.trim(), // <--- send it!
+    });
+    toast.success("Account created successfully!");
+    navigate("/login");
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.message || error.message || "Signup failed"
+    );
+  }
+};
 
   const isPasswordMatch = password.trim() === confirmPassword.trim();
 
