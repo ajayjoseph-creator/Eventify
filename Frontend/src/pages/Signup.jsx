@@ -18,17 +18,14 @@ const Signup = () => {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
-  if (password.trim() !== confirmPassword.trim()) {
-    toast.error("Passwords do not match");
-    return;
-  }
+  
 
   try {
     await API.post("/api/auth/register", {
       name: name.trim(),
       email: email.trim(),
       password: password.trim(),
-      confirmPassword: confirmPassword.trim(), // <--- send it!
+      confirmPassword: confirmPassword.trim(), 
     });
     toast.success("Account created successfully!");
     navigate("/login");
