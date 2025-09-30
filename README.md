@@ -15,3 +15,10 @@ Backend
 Node.js + Express.js
 Lightweight, fast, scalable REST API development.
 
+
+Bckend run cmmand 
+npm start
+
+Frontend run command 
+npm run dev
+
