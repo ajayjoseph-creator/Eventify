@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css"; 
@@ -8,9 +8,16 @@ import Signup from "./pages/Signup.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import CreateEvent from "./pages/CreateEvent.jsx";
 import ProtectedRoute from "./components/protectedRouter.jsx";
-import PublicEvent from "./components/PublicEvent.jsx"
+import PublicEvent from "./components/PublicEvent.jsx";
+import WelcomeAnimation from "./components/WelcomeAnimation.jsx";
 
 function App() {
+  const [showWelcome, setShowWelcome] = useState(true);
+
+  if (showWelcome) {
+    return <WelcomeAnimation onComplete={() => setShowWelcome(false)} />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
@@ -18,12 +25,11 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute> }  />
-        <Route path="/create-event" element={ <ProtectedRoute> <CreateEvent /> </ProtectedRoute>      } />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/create-event" element={<ProtectedRoute><CreateEvent /></ProtectedRoute>} />
         <Route path="/events/public/:publicLink" element={<PublicEvent />} />
       </Routes>
 
-      {/* Toast container goes here */}
       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
